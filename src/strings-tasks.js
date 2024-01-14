@@ -54,7 +54,7 @@ function isString(value) {
  *   concatenateStrings('', 'bb') => 'bb'
  */
 function concatenateStrings(value1, value2) {
-  return value1 + value2;
+  return value1.concat(value2);
 }
 
 /**
@@ -114,7 +114,7 @@ function removeLeadingWhitespaces(value) {
  *   removeTrailingWhitespaces('\t\t\tHello, World! ') => '\t\t\tHello, World!'
  */
 function removeTrailingWhitespaces(value) {
-  return value.replace(/\s+$/, '');
+  return value.trimEnd();
 }
 
 /**
@@ -150,7 +150,12 @@ function repeatString(str, times) {
  *   removeFirstOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
 function removeFirstOccurrences(str, value) {
-  return str.replace(value, '');
+  const start = str.toLowerCase().indexOf(value.toLowerCase());
+  const end = start + value.length;
+  if (start >= 0) {
+    return str.substring(0, start).concat(str.substring(end));
+  }
+  return str;
 }
 
 /**
@@ -236,8 +241,9 @@ function endsWith(str, substr) {
  *   formatTime(0, 0) => "00:00"
  */
 function formatTime(minutes, seconds) {
-  const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
-  const paddedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
+  const paddedMinutes = minutes.toString().padStart(2, '0');
+  const paddedSeconds = seconds.toString().padStart(2, '0');
+
   return `${paddedMinutes}:${paddedSeconds}`;
 }
 
